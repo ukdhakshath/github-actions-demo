@@ -1,18 +1,26 @@
-name: Checkout Demo
+name: Node.js CI Demo
 
 on:
   push:
 
 jobs:
-  demo:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: List Files Before Checkout
-        run: ls
-
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: List Files After Checkout
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check Node Version
+        run: node -v
+
+      - name: Check NPM Version
+        run: npm -v
+
+      - name: List Project Files
         run: ls
