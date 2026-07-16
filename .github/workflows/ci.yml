@@ -1,26 +1,24 @@
-name: Environment Demo
+name: Secrets Demo
 
 on:
   push:
 
 env:
   PROJECT_NAME: GitHub Actions Demo
-  AUTHOR: Dhakshath
 
 jobs:
-  env-demo:
+  secret-demo:
+
     runs-on: ubuntu-latest
 
     steps:
+
       - uses: actions/checkout@v4
 
       - name: Print Project Name
         run: echo $PROJECT_NAME
 
-      - name: Print Author
-        run: echo $AUTHOR
-
-      - name: Print Both
-        run: |
-          echo "Project: $PROJECT_NAME"
-          echo "Author: $AUTHOR"
+      - name: Read Secret
+        env:
+          MY_SECRET: ${{ secrets.MY_SECRET }}
+        run: echo $MY_SECRET
