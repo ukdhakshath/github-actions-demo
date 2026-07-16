@@ -1,11 +1,11 @@
-name: Multi Job Demo
+name: Conditional Demo
 
 on:
   push:
 
 jobs:
 
-  test:
+  demo:
 
     runs-on: ubuntu-latest
 
@@ -13,31 +13,13 @@ jobs:
 
       - uses: actions/checkout@v4
 
-      - name: Run Tests
-        run: exit 1
+      - name: Print Branch
+        run: echo "Current Branch is ${{ github.ref }}"
 
-  build:
+      - name: Main Branch Only
+        if: github.ref == 'refs/heads/main'
+        run: echo "Deploying Production"
 
-    needs: test
-
-    runs-on: ubuntu-latest
-
-    steps:
-
-      - uses: actions/checkout@v4
-
-      - name: Build Project
-        run: echo "Building Project..."
-
-  deploy:
-
-    needs: build
-
-    runs-on: ubuntu-latest
-
-    steps:
-
-      - uses: actions/checkout@v4
-
-      - name: Deploy
-        run: echo "Deploying Application..."
+      - name: Always Runs
+        if: always()
+        run: echo "Cleanup Complete"
