@@ -1,25 +1,15 @@
-name: Conditional Demo
+name: Trigger Demo
 
 on:
   push:
+    branches:
+      - main
+
+  workflow_dispatch:
 
 jobs:
-
   demo:
-
     runs-on: ubuntu-latest
 
     steps:
-
-      - uses: actions/checkout@v4
-
-      - name: Print Branch
-        run: echo "Current Branch is ${{ github.ref }}"
-
-      - name: Main Branch Only
-        if: github.ref == 'refs/heads/main'
-        run: echo "Deploying Production"
-
-      - name: Always Runs
-        if: always()
-        run: echo "Cleanup Complete"
+      - run: echo "Workflow Triggered!"
